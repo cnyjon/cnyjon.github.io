@@ -2,7 +2,7 @@
 title: Johnson
 email: cnyjon@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  我就一深进冰
+  《时代周刊》(Time) “2006年度风云人物”
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://cnyjon.github.io" # the base hostname & protocol for your site
 twitter_username: cnyjon
