@@ -2,14 +2,10 @@
 layout: post
 title:  "如何在树霉派中通过命令行设置WiFi"
 date:   2016-04-11 23:05:20
-categories: Raspberry Pi
+categories: RaspberryPi
 
 ---
-
-# 如何在树霉派中通过命令行设置WiFi
-
-### 1. 先安装工具和驱动(网卡为TP-Link TL-WN722N)
-
+#### 1. 先安装工具和驱动(网卡为TP-Link TL-WN722N)
 
 	sudo apt-get update
 	sudo apt-get install wireless-tools usbutils
@@ -17,7 +13,7 @@ categories: Raspberry Pi
  	sudo wget http://linuxwireless.org/download/htc_fw/1.3/htc_9271.fw
  	sudo cp htc_9271.fw /lib/firmware
 
-### 2. 编辑配置文件`/etc/network/interfaces`
+#### 2. 编辑配置文件`/etc/network/interfaces`
 
 	auto lo
 
@@ -29,12 +25,12 @@ categories: Raspberry Pi
 	iface wlan0 inet dhcp
 	wpa-conf /etc/wpa.conf
 	
-### 3. 安装上无线网卡，然后检测是不可用
+#### 3. 安装上无线网卡，然后检测是不可用
 
 	sudo iwconfig
 	sudo iwlist wlan0 scan
 	
-### 4. 创建`wpa.conf`文件，例如: `sudo vi /etc/wpa.conf`
+#### 4. 创建`wpa.conf`文件，例如: `sudo vi /etc/wpa.conf`
 
 	network={
 	ssid="NETWORK-SSID"
@@ -53,6 +49,6 @@ categories: Raspberry Pi
 	auth_alg=OPEN
 	}
 	
-### 5. 最后重启设备
+#### 5. 最后重启设备
 
 	sudo reboot
