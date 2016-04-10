@@ -2,6 +2,7 @@
 layout: post
 title:  "如何在树霉派中通过命令行设置WiFi"
 date:   2016-04-11 23:05:20
+categories: RaspberryPi
 
 ---
 #### 1. 先安装工具和驱动(网卡为TP-Link TL-WN722N)
