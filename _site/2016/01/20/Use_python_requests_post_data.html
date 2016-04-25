@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Johnson</title>
+    <title>使用requests发送POST请求</title>
     <meta name="description" content="《时代周刊》(Time) “2006年度风云人物”
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://cnyjon.github.io/">
+    <link rel="canonical" href="http://cnyjon.github.io/2016/01/20/Use_python_requests_post_data.html">
 </head>
 
 
@@ -54,55 +54,31 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">使用requests发送POST请求</h1>
+    <p class="post-meta">Jan 20, 2016</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Apr 11, 2016</span>
+  <article class="post-content">
+    <h1 id="requestspost">使用requests发送POST请求</h1>
 
-        <h2>
-          <a class="post-link" href="/raspberrypi/2016/04/11/How_to_Setup_WiFi_On_Your_Raspberry_Pi_via_the_Command_Line.html">如何在树霉派中通过命令行设置WiFi</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 20, 2016</span>
+<p>在Python脚本中直接POST表单到服务器</p>
 
-        <h2>
-          <a class="post-link" href="/2016/01/20/Use_python_requests_post_data.html">使用requests发送POST请求</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Apr 27, 2015</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
-        <h2>
-          <a class="post-link" href="/2015/04/27/How_to_install_and_configure_tinc_VPN_on_Linux2014-11-15.html">在Linux上安装Tinc VPN</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Nov 15, 2014</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="err">‘</span><span class="n">key1</span><span class="err">’</span><span class="p">:</span> <span class="s">'value1'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">:</span> <span class="s">'value2'</span><span class="p">}</span>
 
-        <h2>
-          <a class="post-link" href="/2014/11/15/Introduction-Swift-REPL.html">Swift REPL简介</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Nov 1, 2014</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'User-Agent'</span><span class="p">:</span> <span class="s">'Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0'</span><span class="p">,</span> <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'</span><span class="p">,</span> <span class="s">'Accept-Encoding'</span><span class="p">:</span> <span class="s">'gzip, deflate'</span><span class="p">,</span> <span class="s">'Referer'</span><span class="p">:</span> <span class="s">'http://www.example.com/open.php'</span><span class="p">,</span> <span class="s">'Cookie'</span><span class="p">:</span> <span class="s">'OSTSESSID=3gvg0daagonmsds3lr4dac8r32'</span><span class="p">,</span> <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/x-www-form-urlencoded'</span> <span class="p">}</span>
 
-        <h2>
-          <a class="post-link" href="/jekyll/update/2014/11/01/welcome-to-jekyll.html">Welcome to Jekyll!</a>
-        </h2>
-      </li>
-    
-  </ul>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"http://www.example.com/open.php"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre>
+</div>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+  </article>
 
 </div>
 

@@ -6,47 +6,288 @@
 </description>
     <link>http://cnyjon.github.io/</link>
     <atom:link href="http://cnyjon.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 21 Nov 2014 23:36:23 +0800</pubDate>
-    <lastBuildDate>Fri, 21 Nov 2014 23:36:23 +0800</lastBuildDate>
-    <generator>Jekyll v2.4.0</generator>
+    <pubDate>Mon, 25 Apr 2016 17:19:52 +0000</pubDate>
+    <lastBuildDate>Mon, 25 Apr 2016 17:19:52 +0000</lastBuildDate>
+    <generator>Jekyll v3.1.3</generator>
+    
+      <item>
+        <title>如何在树霉派中通过命令行设置WiFi</title>
+        <description>&lt;h4 id=&quot;tp-link-tl-wn722n&quot;&gt;1. 先安装工具和驱动(网卡为TP-Link TL-WN722N)&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install wireless-tools usbutils
+sudo apt-get install firmware-atheros
+ 	sudo wget http://linuxwireless.org/download/htc_fw/1.3/htc_9271.fw
+ 	sudo cp htc_9271.fw /lib/firmware
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;etcnetworkinterfaces&quot;&gt;2. 编辑配置文件&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/network/interfaces&lt;/code&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+# 下面是新增的无线配置
+auto wlan0
+iface wlan0 inet dhcp
+wpa-conf /etc/wpa.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;3. 安装上无线网卡，然后检测是不可用&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo iwconfig
+sudo iwlist wlan0 scan
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;wpaconf-sudo-vi-etcwpaconf&quot;&gt;4. 创建&lt;code class=&quot;highlighter-rouge&quot;&gt;wpa.conf&lt;/code&gt;文件，例如: &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo vi /etc/wpa.conf&lt;/code&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;network={
+ssid=&quot;NETWORK-SSID&quot;
+psk=&quot;YOURPASSWORD&quot;
+
+# Protocol type can be: RSN (for WP2) and WPA (for WPA1)
+proto=RSN
+
+# Key management type can be: WPA-PSK or WPA-EAP (Pre-Shared or Enterprise)
+key_mgmt=WPA-PSK
+
+# Pairwise can be CCMP or TKIP (for WPA2 or WPA1)
+pairwise=CCMP TKIP
+
+#Authorization option should be OPEN for both WPA1/WPA2 (in less commonly used are SHARED and LEAP)
+auth_alg=OPEN
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;5. 最后重启设备&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo reboot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 11 Apr 2016 23:05:20 +0000</pubDate>
+        <link>http://cnyjon.github.io/raspberrypi/2016/04/11/How_to_Setup_WiFi_On_Your_Raspberry_Pi_via_the_Command_Line.html</link>
+        <guid isPermaLink="true">http://cnyjon.github.io/raspberrypi/2016/04/11/How_to_Setup_WiFi_On_Your_Raspberry_Pi_via_the_Command_Line.html</guid>
+        
+        
+        <category>RaspberryPi</category>
+        
+      </item>
+    
+      <item>
+        <title>使用requests发送POST请求</title>
+        <description>&lt;h1 id=&quot;requestspost&quot;&gt;使用requests发送POST请求&lt;/h1&gt;
+
+&lt;p&gt;在Python脚本中直接POST表单到服务器&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;‘&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;’&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;value1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;key2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;value2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;User-Agent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Accept&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Accept-Encoding&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;gzip, deflate&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Referer&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;http://www.example.com/open.php&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Cookie&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;OSTSESSID=3gvg0daagonmsds3lr4dac8r32&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Content-Type&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;application/x-www-form-urlencoded&#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.example.com/open.php&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 20 Jan 2016 23:05:20 +0000</pubDate>
+        <link>http://cnyjon.github.io/2016/01/20/Use_python_requests_post_data.html</link>
+        <guid isPermaLink="true">http://cnyjon.github.io/2016/01/20/Use_python_requests_post_data.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>在Linux上安装Tinc VPN</title>
+        <description>&lt;h1 id=&quot;ubuntutinc-vpn&quot;&gt;在Ubuntu上安装Tinc VPN&lt;/h1&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tinc&lt;/code&gt;是荷兰一所大学计算机学院开发的一个非常强大的安全VPN通信软件，它可以穿越两个内网进行防火墙穿洞互相链接，软件本身支持socke服务端代理，可供客户端通过代理上网，他的强大之处还在与可以使众多客户端形成点到点的端口链接，这点&lt;code class=&quot;highlighter-rouge&quot;&gt;OPENVPN&lt;/code&gt; 可做不到，所以安装了&lt;code class=&quot;highlighter-rouge&quot;&gt;tinc&lt;/code&gt;的客户端可以使大家在互联网上一起玩局域网游戏，&lt;/p&gt;
+
+&lt;h3 id=&quot;tinc&quot;&gt;安装Tinc&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get update
+
+$ sudo apt-get install tinc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;tinc-1&quot;&gt;配置Tinc&lt;/h3&gt;
+
+&lt;p&gt;创建文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo mkdir -p /etc/tinc/myvpn/hosts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;编辑文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/tinc/myvpn/tinc.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;添加以下几行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Name = AAA              #添加名为AAA的节点
+AddressFamily = ipv4    #使用IPv4
+Interface = tun0        #虚拟网卡
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;接着创建&lt;code class=&quot;highlighter-rouge&quot;&gt;myvpn&lt;/code&gt;的hosts配置文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/tinc/myvpn/hosts/AAA
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;添加以下两行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Address = 1.2.3.4      #服务器的公网IP地址
+Subnet = 10.0.0.1/32   #VPN的虚拟网卡内网地址
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;接着生成我们的密钥&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo tincd -n myvpn -K4096
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;创建一个&lt;code class=&quot;highlighter-rouge&quot;&gt;myvpn&lt;/code&gt; VPN开始运行时自动运行的脚本&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/tinc/myvpn/tinc-up
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;添加如下行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+ifconfig &lt;span class=&quot;nv&quot;&gt;$INTERFACE&lt;/span&gt; 10.0.0.1 netmask 255.255.255.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当开始运行&lt;code class=&quot;highlighter-rouge&quot;&gt;myvpn&lt;/code&gt; VPN时，这个脚本会创建一个网络适配器，分配10.0.0.1 IP给它。
+接着再创建一下关闭的脚本。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo vi /etc/tinc/myvpn/tinc-down
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;添加&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+ifconfig &lt;span class=&quot;nv&quot;&gt;$INTERFACE&lt;/span&gt; down
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;改变这两个文件的权限&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo chmod 755 /etc/tinc/myvpn/tinc-*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;现在服务器节点已建立完成，建立客端节点和它类似。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo mkdir -p /etc/tinc/myvpn
+$ sudo vi /etc/tinc/myvpn/tinc.conf
+
+Name = BBB
+AddressFamily = ipv4
+Interface = tun0
+ConnectTo = AAA
+
+$ sudo vi /etc/tinc/myvpn/hosts/BBB
+
+Subnet = 10.0.0.2/32
+
+$ sudo tincd -n myvpn -K4096
+
+$ sudo vi /etc/tinc/myvpn/tinc-up
+
+ifconfig $INTERFACE 10.0.0.2 netmask 255.255.255.0
+
+$ sudo vi /etc/tinc/myvpn/tinc-down
+
+ifconfig $INTERFACE down
+
+$ sudo chmod 755 /etc/tinc/myvpn/tinc-*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在AAA主机上&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp /etc/tinc/myvpn/hosts/AAA root@BBB:/etc/tinc/myvpn/hosts/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在BBB主机上&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ scp /etc/tinc/myvpn/hosts/BBB root@AAA:/etc/tinc/myvpn/hosts/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最后两台机都运行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo tincd -n myvpn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 27 Apr 2015 01:25:32 +0000</pubDate>
+        <link>http://cnyjon.github.io/2015/04/27/How_to_install_and_configure_tinc_VPN_on_Linux2014-11-15.html</link>
+        <guid isPermaLink="true">http://cnyjon.github.io/2015/04/27/How_to_install_and_configure_tinc_VPN_on_Linux2014-11-15.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Swift REPL简介</title>
-        <description>&lt;p&gt;&lt;code&gt;Xcode 6.1&lt;/code&gt;引入了一个新特性用来辅助Swift开发，即Read Eval Print Loop(“读取-求值-输出-循环”，简称REPL)。熟悉解释型语言的同学将会对这个命令行环境感到舒适，而有经验的同学也能在其中发现一些有用的功能。
-开始使用它，首先打开&lt;code&gt;终端&lt;/code&gt;(在&lt;code&gt;/Applications/Utilities&lt;/code&gt;)。然后，如果是&lt;code&gt;OS X Yosemite&lt;/code&gt;输入&lt;code&gt;swift&lt;/code&gt;，&lt;code&gt;OS X Mavericks&lt;/code&gt;输入&lt;code&gt;xcrun swift&lt;/code&gt;，之后你就打开了&lt;code&gt;Swift REPL&lt;/code&gt;：&lt;/p&gt;
+        <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Xcode 6.1&lt;/code&gt;引入了一个新特性用来辅助Swift开发，即Read Eval Print Loop(“读取-求值-输出-循环”，简称REPL)。熟悉解释型语言的同学将会对这个命令行环境感到舒适，而有经验的同学也能在其中发现一些有用的功能。
+开始使用它，首先打开&lt;code class=&quot;highlighter-rouge&quot;&gt;终端&lt;/code&gt;(在&lt;code class=&quot;highlighter-rouge&quot;&gt;/Applications/Utilities&lt;/code&gt;)。然后，如果是&lt;code class=&quot;highlighter-rouge&quot;&gt;OS X Yosemite&lt;/code&gt;输入&lt;code class=&quot;highlighter-rouge&quot;&gt;swift&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;OS X Mavericks&lt;/code&gt;输入&lt;code class=&quot;highlighter-rouge&quot;&gt;xcrun swift&lt;/code&gt;，之后你就打开了&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift REPL&lt;/code&gt;：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Welcome to Swift!  Type :help for assistance.
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Welcome to Swift!  Type :help for assistance.
   1&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;你需要做的就是在光标处输入Swift语句，&lt;code&gt;REPL&lt;/code&gt;将立刻执行你的代码。表达式的结果将自动的格式化并和输入的变量以及常一起显示。控制台的输出流将自然的嵌入到互动会话中:&lt;/p&gt;
+&lt;p&gt;你需要做的就是在光标处输入Swift语句，&lt;code class=&quot;highlighter-rouge&quot;&gt;REPL&lt;/code&gt;将立刻执行你的代码。表达式的结果将自动的格式化并和输入的变量以及常一起显示。控制台的输出流将自然的嵌入到互动会话中:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  1&amp;gt; &quot;100&quot;.toInt()
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  1&amp;gt; &quot;100&quot;.toInt()
 $R0: Int? = 100
   2&amp;gt; let name = &quot;Katherine&quot;
 name: String = &quot;Katherine&quot;
   3&amp;gt; println(&quot;Hello,\(name)&quot;)
 Hello,Katherine
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;注意第一行命令的结果被REPL添加了一个名称，即使表达式并没有明确的分配名称。你能在随后的语句中使用这些变量名称来重用它们：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  4&amp;gt; $R0! + 200
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  4&amp;gt; $R0! + 200
 $R1: Int = 300
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Swift编译器还能识别未完成的代码，并且会在需要时提示补全代码。甚至代码能自动的缩进，就跟在Xcode里一样。比如，输入一个函数：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  5&amp;gt; func timesTwo(){
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  5&amp;gt; func timesTwo(){
   6.      ▌
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;接下来的行的提示会显示行号和一个点，而不是用来指示新语句的尖括号。所以你一眼就能看出代码是否需要补全。在这里你能输入方法中剩下的代码：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  5&amp;gt; func timesTwo(){
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  5&amp;gt; func timesTwo(){
   6.     return value * 2
   7. }▌
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;这里有3个值得注意的地方：首先，上面的第六行是自动缩进的，但REPL会在我们输入结束的花括号时自动结束缩进。其次，上面的函数引用了一个参数，但我们忘记事先声明它了，并且函数还需要一个返回类型。最后，即使你已经在最后一行回车了，你仍然可以很方便的修改它们。&lt;/p&gt;
 
@@ -54,8 +295,9 @@ $R1: Int = 300
 
 &lt;p&gt;当代码被提交到编译器，它同时也被储存在REPL的历史记录里面，因此修改错误将会非常简单。如果你在上面未完成的函数最后敲下回车，你会获得一条错误信息：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  error: use of unresolved identifier &#39;value&#39;	   和其他大多数历史记录的实现一样，你能按下向上的箭头“↑”来调出历史输入。在这里REPL将会调出整个三行输入，并将光标置于最后。现在你能够编辑代码来改正输入错误了。
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  error: use of unresolved identifier &#39;value&#39;	   和其他大多数历史记录的实现一样，你能按下向上的箭头“↑”来调出历史输入。在这里REPL将会调出整个三行输入，并将光标置于最后。现在你能够编辑代码来改正输入错误了。
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;你的输入的历史记录将会保存在会话中，并且能够记录数百条代码片段。在空行按向上键则会调出较早的历史输入，按向下键则会调出较近的历史输入。&lt;/p&gt;
 
@@ -63,38 +305,43 @@ $R1: Int = 300
 
 &lt;p&gt;即使REPL的表现像是传统的命令行编辑器，它还能提供方便的功能来处理多行输入，比如大多数类和函数声明。在上面例子里，你可以用方向键在行间移动，来快速定位需要修改的地方：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  5&amp;gt; func timesTwo(▌){
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  5&amp;gt; func timesTwo(▌){
   6.     return value * 2
   7. }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;然后你可以添加参数声明以及返回类型：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  5&amp;gt; func timesTwo(value: Int) -&amp;gt; Int {
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  5&amp;gt; func timesTwo(value: Int) -&amp;gt; Int {
   6.     return value * 2
   7. }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;在当前光标处按下回车不会提交函数而是会插入新行，你需要将光标移到函数的末尾按下回车，函数就能够使用了：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  8&amp;gt; timesTwo(21)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  8&amp;gt; timesTwo(21)
 $R2: (Int) = 42
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;自动探测语句的结束点意味着你能够自由的输入代码，REPL在绝大多数情况下都能正确处理你的输入。不过意外情况也是存在的，当函数有共同依赖时，需要一次提交多个声明，比如下面的代码：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;func foo(){
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;func foo(){
 	bar()
 }
 func bar(){
 	foo()
 }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;如果你一行一行的输入上面的代码，到第三行结束时编译器就会编译第一个函数，因此将导致错误：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;error: use of unresolved identifier &#39;bar&#39;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;error: use of unresolved identifier &#39;bar&#39;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;一个解决办法是，在同一行里输入多个函数，这样就能绕过自动探测结束点，不过还有更好的解决方案。在输入完第三行后，你能按向下键“↓”来手动增加一行，这样你就能像平常一样输入剩下的代码了。两个函数声明将被一起编译，达到互递归（mutual recursion）的目的。&lt;/p&gt;
 
@@ -102,7 +349,7 @@ func bar(){
 
 &lt;p&gt;为帮助你上手REPL，下面列出一些经常被使用的编辑和导航组合键：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Arrow Keys		移动光标 左/右/上/下
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Arrow Keys		移动光标 左/右/上/下
 Control+F		光标向右移动一个字符, 和右键一样
 Control+B		光标向左移动一个字符, 和左键一样
 Control+N		光标移动到下一行的最后, 和下键一样
@@ -116,10 +363,11 @@ Delete			删除光标左边的一个字符
 Esc &amp;lt;			光标移动到第一行开始位置
 Esc &amp;gt;			光标移动到最后一行行尾
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;[原文](http://developer.apple.com/swift/blog/?id=18）&lt;/p&gt;
 </description>
-        <pubDate>Sat, 15 Nov 2014 21:36:32 +0800</pubDate>
+        <pubDate>Sat, 15 Nov 2014 13:36:32 +0000</pubDate>
         <link>http://cnyjon.github.io/2014/11/15/Introduction-Swift-REPL.html</link>
         <guid isPermaLink="true">http://cnyjon.github.io/2014/11/15/Introduction-Swift-REPL.html</guid>
         
@@ -128,22 +376,22 @@ Esc &amp;gt;			光标移动到最后一行行尾
     
       <item>
         <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code&gt;jekyll serve --watch&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve --watch&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
 
 &lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Tom&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Tom&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &#39;Hi, Tom&#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 01 Nov 2014 09:32:08 +0800</pubDate>
+        <pubDate>Sat, 01 Nov 2014 01:32:08 +0000</pubDate>
         <link>http://cnyjon.github.io/jekyll/update/2014/11/01/welcome-to-jekyll.html</link>
         <guid isPermaLink="true">http://cnyjon.github.io/jekyll/update/2014/11/01/welcome-to-jekyll.html</guid>
         
