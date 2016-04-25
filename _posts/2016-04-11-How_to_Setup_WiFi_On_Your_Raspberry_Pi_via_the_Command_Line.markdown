@@ -10,8 +10,8 @@ categories: RaspberryPi
 	sudo apt-get update
 	sudo apt-get install wireless-tools usbutils
 	sudo apt-get install firmware-atheros
- 	sudo wget http://linuxwireless.org/download/htc_fw/1.3/htc_9271.fw
- 	sudo cp htc_9271.fw /lib/firmware
+	sudo wget http://linuxwireless.org/download/htc_fw/1.3/htc_9271.fw
+	sudo cp htc_9271.fw /lib/firmware
 
 #### 2. 编辑配置文件`/etc/network/interfaces`
 
